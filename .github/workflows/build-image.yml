@@ -14,8 +14,8 @@ jobs:
       - name: Checkout CustomPiOS
         uses: actions/checkout@v2
         with:
-          repository: "guysoft/CustomPiOS"
-          # ref: devel
+          repository: "StanislasJbms/CustomPiOS"
+          ref: devel
           path: CustomPiOS
 
       - name: Checkout Project Repository
