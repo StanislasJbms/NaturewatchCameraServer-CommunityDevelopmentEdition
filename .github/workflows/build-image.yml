@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: "guysoft/CustomPiOS"
-          ref: devel
+          # ref: devel
           path: CustomPiOS
 
       - name: Checkout Project Repository
@@ -23,6 +23,7 @@ jobs:
         with:
           repository: ${{ github.repository }}
           path: repository
+          submodules: true
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -37,14 +38,19 @@ jobs:
           popd
 
       - name: Download Raspbian Image
-        run: |
-          cd repository/os/image
-          wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2024-11-19/2024-11-19-raspios-bookworm-armhf-lite.img.xz'
-
+        run: cd repository/src/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
       - name: Update CustomPiOS Paths
-        run: |
-          cd repository/os
-          ../../CustomPiOS/src/update-custompios-paths
+        run: cd repository/src && ../../CustomPiOS/src/update-custompios-paths
+
+      # - name: Download Raspbian Image
+      #   run: |
+      #     cd repository/os/image
+      #     wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2024-11-19/2024-11-19-raspios-bookworm-armhf-lite.img.xz'
+
+      # - name: Update CustomPiOS Paths
+      #   run: |
+      #     cd repository/os
+      #     ../../CustomPiOS/src/update-custompios-paths
 
       - name: Copy NaturewatchCameraServer to CustomPiOS directory
         run: |
